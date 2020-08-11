@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationConditional">
+        <xpath>/Defs/ThingDef[defName="TubeTelevision"]/tickerType</xpath>
+        <match Class="PatchOperationReplace">
+          <xpath>/Defs/ThingDef[defName="TubeTelevision"]/tickerType</xpath>
+          <value>
+            <tickerType>Normal</tickerType>
+          </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="TubeTelevision"]</xpath>
+          <value>
+            <tickerType>Normal</tickerType>
+          </value>
+        </nomatch>
+      </li>
+      <li Class="PatchOperationConditional">
+        <xpath>/Defs/ThingDef[defName="FlatscreenTelevision"]/tickerType</xpath>
+        <match Class="PatchOperationReplace">
+          <xpath>/Defs/ThingDef[defName="FlatscreenTelevision"]/tickerType</xpath>
+          <value>
+            <tickerType>Normal</tickerType>
+          </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="FlatscreenTelevision"]</xpath>
+          <value>
+            <tickerType>Normal</tickerType>
+          </value>
+        </nomatch>
+      </li>
+      <li Class="PatchOperationConditional">
+        <xpath>/Defs/ThingDef[defName="MegascreenTelevision"]/tickerType</xpath>
+        <match Class="PatchOperationReplace">
+          <xpath>/Defs/ThingDef[defName="MegascreenTelevision"]/tickerType</xpath>
+          <value>
+            <tickerType>Normal</tickerType>
+          </value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="MegascreenTelevision"]</xpath>
+          <value>
+            <tickerType>Normal</tickerType>
+          </value>
+        </nomatch>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="TubeTelevision"]/comps</xpath>
+        <value>
+          <li Class="TVForPrison.CompProperties_TVForPrison">
+            <effectRadius>10</effectRadius>
+            <effectFactor>0.7</effectFactor>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="FlatscreenTelevision"]/comps</xpath>
+        <value>
+          <li Class="TVForPrison.CompProperties_TVForPrison">
+            <effectRadius>12</effectRadius>
+            <effectFactor>0.85</effectFactor>
+          </li>
+        </value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="MegascreenTelevision"]/comps</xpath>
+        <value>
+          <li Class="TVForPrison.CompProperties_TVForPrison">
+            <effectRadius>14</effectRadius>
+            <effectFactor>1.0</effectFactor>
+          </li>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
