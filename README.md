@@ -1,23 +1,14 @@
 # TVForPrison
 
-![Image](https://i.imgur.com/WAEzk68.png)
+![Image](https://i.imgur.com/buuPQel.png)
 
 Update of peladors mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=2002019195
 
-![Image](https://i.imgur.com/7Gzt3Rg.png)
+![Image](https://i.imgur.com/pufA0kM.png)
 
-
-[table]
-	[tr]
-		[td]https://invite.gg/Mlie]![Image](https://i.imgur.com/zdzzBrc.png)
-[/td]
-		[td]https://github.com/emipa606/TVForPrison]![Image](https://i.imgur.com/kTkpTOE.png)
-[/td]
-	[/tr]
-[/table]
 	
-![Image](https://i.imgur.com/NOW7jU1.png)
+![Image](https://i.imgur.com/Z4GOv8H.png)
 
 
 # Overview
@@ -50,7 +41,7 @@ No additional research needed.
 
 Uses a comp for the functionality (ensure you have a tickerType Normal) so feel free to add compatibility to other modded TV versions when this mod is loaded. You can control the range and relative effectiveness.
 
-Place after &quot;Rimflix&quot; in the mod load order.
+Place after "Rimflix" in the mod load order.
 
 
 # Legal
@@ -62,7 +53,7 @@ This mod accepts no responsibility for the loss of TVs due to prisoner actions.
 (CC BY-NC-SA 4.0)
 
 
-![Image](https://i.imgur.com/Rs6T6cr.png)
+![Image](https://i.imgur.com/PwoNOj4.png)
 
 
 

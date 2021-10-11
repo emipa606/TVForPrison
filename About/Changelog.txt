@@ -1,5 +1,8 @@
 # Changelog for TVForPrison
 
+1.0.2.0 - Tvs now also reduce will, thank you Jellypowered!
+
+
 1.0.1.0 - Mod updated for 1.3 and passed autotests
 
 

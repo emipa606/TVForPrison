@@ -1,26 +1,24 @@
-using RimWorld;
 using System;
 using System.Linq;
+using RimWorld;
 using Verse;
 
 namespace TVForPrison
 {
     public class CompTVForPrison : ThingComp
     {
+        public static readonly bool IdeoActive = ModLister.IdeologyInstalled;
         public CompProperties_TVForPrison Props => (CompProperties_TVForPrison)props;
 
         public Building TV => parent as Building;
-        public static bool IdeoActive = ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name == "Ideology");
 
 
         public override void CompTick()
         {
             var tickPeriod = 2500;
-            var debug = false;
-            if (debug)
-            {
-                tickPeriod = 120;
-            }
+#if DEBUG
+            tickPeriod = 120;
+#endif
 
             base.CompTick();
             if (Find.TickManager.TicksGame % tickPeriod != 0 || !isFunctional(TV))
@@ -28,10 +26,9 @@ namespace TVForPrison
                 return;
             }
 
-            if (debug)
-            {
-                Log.Message("TV OK: " + TV.def.label);
-            }
+#if DEBUG
+            Log.Message("TV OK: " + TV.def.label);
+#endif
 
             var list = GenRadial.RadialCellsAround(TV.Position, Math.Min(15, Props.effectRadius), true).ToList();
             if (list.Count <= 0)
@@ -63,28 +60,26 @@ namespace TVForPrison
                     {
                         continue;
                     }
-
-                    if (debug)
-                    {
-                        Log.Message("Pawn OK: " + pawn.Label);
-                    }
+#if DEBUG
+                    Log.Message("Pawn OK: " + pawn.Label);
+#endif
 
                     var guest = pawn.guest;
-                    var num = guest != null ? new float?(guest.Resistance) : null;
-                    var numw = guest != null ? new float?(guest.will) : null;
-                    var num2 = 0f;
 
-                    if (!((num.GetValueOrDefault() > num2) & (num != null)))
-                    {
-                        continue;
-                    }
-                    if (!((numw.GetValueOrDefault() > num2) & (numw != null)))
+                    if (guest == null)
                     {
                         continue;
                     }
 
-                    var res = pawn.guest.Resistance;
-                    var will = pawn.guest.will;
+                    var guestResistance = guest.Resistance;
+                    var guestWill = guest.will;
+                    const float lowestValue = 0f;
+
+                    if (guestResistance <= lowestValue && guestWill <= lowestValue)
+                    {
+                        continue;
+                    }
+
                     var factor = 1f;
                     var needs = pawn.needs;
 
@@ -130,37 +125,43 @@ namespace TVForPrison
                         continue;
                     }
 
-                    var reduction = Math.Min(0.25f, res / 25f * factor);
-                    var willreduction = Math.Min(0.25f, will / 25f * factor);
+                    var reduction = Math.Min(0.25f, guestResistance / 25f * factor);
+                    var willreduction = Math.Min(0.25f, guestWill / 25f * factor);
 
-                    if (res - reduction < 0f)
+                    if (guestResistance > lowestValue)
                     {
-                        res = 0f;
-                        Messages.Message(
-                            "PrisonTV.resbroken".Translate(pawn.LabelShort), MessageTypeDefOf.NeutralEvent);
-                    }
-                    else
-                    {
-                        res -= reduction;
-                    }
-                    if (IdeoActive)
-                    {
-                        if (will - willreduction < 0f)
+                        if (guestResistance - reduction < 0f)
                         {
-                            will = 0f;
+                            guestResistance = lowestValue;
+                            Messages.Message(
+                                "PrisonTV.resbroken".Translate(pawn.LabelShort), MessageTypeDefOf.NeutralEvent);
+                        }
+                        else
+                        {
+                            guestResistance -= reduction;
+                        }
+                    }
+
+                    if (IdeoActive && guestWill > lowestValue)
+                    {
+                        if (guestWill - willreduction < 0f)
+                        {
+                            guestWill = 0f;
                             Messages.Message(
                                 "PrisonTV.willbroken".Translate(pawn.LabelShort), MessageTypeDefOf.NeutralEvent);
                         }
                         else
                         {
-                            will -= willreduction;
+                            guestWill -= willreduction;
                         }
                     }
-                    pawn.guest.resistance = res;
+
+                    pawn.guest.resistance = guestResistance;
                     if (IdeoActive)
                     {
-                        pawn.guest.will = will;
+                        pawn.guest.will = guestWill;
                     }
+
                     GiveTVThought(pawn);
                 }
             }
@@ -197,16 +198,16 @@ namespace TVForPrison
                    !pawn.IsBurning() && !pawn.InMentalState && !pawn.Downed;
         }
 
-        public bool IsValidCell(IntVec3 cell, Building TV)
+        public bool IsValidCell(IntVec3 cell, Building tv)
         {
-            return cell.IsValid && cell.InBounds(TV.Map);
+            return cell.IsValid && cell.InBounds(tv.Map);
         }
 
 
-        public bool isFunctional(Building TV)
+        public bool isFunctional(Building tv)
         {
-            return !TV.DestroyedOrNull() && TV?.Map != null && TV.Spawned &&
-                   TV.TryGetComp<CompPowerTrader>().PowerOn && !TV.IsBrokenDown();
+            return !tv.DestroyedOrNull() && tv?.Map != null && tv.Spawned &&
+                   tv.TryGetComp<CompPowerTrader>().PowerOn && !tv.IsBrokenDown();
         }
     }
 }
