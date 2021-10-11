@@ -1,22 +1,18 @@
-﻿using System;
-using System.Linq;
 using RimWorld;
+using System;
+using System.Linq;
 using Verse;
 
 namespace TVForPrison
 {
-    // Token: 0x02000002 RID: 2
     public class CompTVForPrison : ThingComp
     {
-        // Token: 0x17000001 RID: 1
-        // (get) Token: 0x06000001 RID: 1 RVA: 0x00002050 File Offset: 0x00000250
-        public CompProperties_TVForPrison Props => (CompProperties_TVForPrison) props;
+        public CompProperties_TVForPrison Props => (CompProperties_TVForPrison)props;
 
-        // Token: 0x17000002 RID: 2
-        // (get) Token: 0x06000002 RID: 2 RVA: 0x0000205D File Offset: 0x0000025D
         public Building TV => parent as Building;
+        public static bool IdeoActive = ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name == "Ideology");
 
-        // Token: 0x06000003 RID: 3 RVA: 0x0000206C File Offset: 0x0000026C
+
         public override void CompTick()
         {
             var tickPeriod = 2500;
@@ -75,13 +71,20 @@ namespace TVForPrison
 
                     var guest = pawn.guest;
                     var num = guest != null ? new float?(guest.Resistance) : null;
+                    var numw = guest != null ? new float?(guest.will) : null;
                     var num2 = 0f;
+
                     if (!((num.GetValueOrDefault() > num2) & (num != null)))
+                    {
+                        continue;
+                    }
+                    if (!((numw.GetValueOrDefault() > num2) & (numw != null)))
                     {
                         continue;
                     }
 
                     var res = pawn.guest.Resistance;
+                    var will = pawn.guest.will;
                     var factor = 1f;
                     var needs = pawn.needs;
 
@@ -128,6 +131,8 @@ namespace TVForPrison
                     }
 
                     var reduction = Math.Min(0.25f, res / 25f * factor);
+                    var willreduction = Math.Min(0.25f, will / 25f * factor);
+
                     if (res - reduction < 0f)
                     {
                         res = 0f;
@@ -138,14 +143,29 @@ namespace TVForPrison
                     {
                         res -= reduction;
                     }
-
+                    if (IdeoActive)
+                    {
+                        if (will - willreduction < 0f)
+                        {
+                            will = 0f;
+                            Messages.Message(
+                                "PrisonTV.willbroken".Translate(pawn.LabelShort), MessageTypeDefOf.NeutralEvent);
+                        }
+                        else
+                        {
+                            will -= willreduction;
+                        }
+                    }
                     pawn.guest.resistance = res;
+                    if (IdeoActive)
+                    {
+                        pawn.guest.will = will;
+                    }
                     GiveTVThought(pawn);
                 }
             }
         }
 
-        // Token: 0x06000004 RID: 4 RVA: 0x00002408 File Offset: 0x00000608
         public void GiveTVThought(Pawn pawn)
         {
             bool hasNeed;
@@ -171,22 +191,18 @@ namespace TVForPrison
             }
         }
 
-        // Token: 0x06000005 RID: 5 RVA: 0x0000245C File Offset: 0x0000065C
         public bool IsValidPawn(Pawn pawn)
         {
             return pawn.IsPrisonerInPrisonCell() && !pawn.RaceProps.IsMechanoid && pawn.Awake() && !pawn.Dead &&
                    !pawn.IsBurning() && !pawn.InMentalState && !pawn.Downed;
         }
 
-        // Token: 0x06000006 RID: 6 RVA: 0x000024A9 File Offset: 0x000006A9
         public bool IsValidCell(IntVec3 cell, Building TV)
         {
             return cell.IsValid && cell.InBounds(TV.Map);
         }
 
-        // Token: 0x06000007 RID: 7 RVA: 0x000024C5 File Offset: 0x000006C5
 
-        // Token: 0x06000008 RID: 8 RVA: 0x000024CD File Offset: 0x000006CD
         public bool isFunctional(Building TV)
         {
             return !TV.DestroyedOrNull() && TV?.Map != null && TV.Spawned &&
