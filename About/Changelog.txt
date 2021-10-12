@@ -1,5 +1,8 @@
 # Changelog for TVForPrison
 
+1.0.3.0 - Republish with debug off...
+
+
 1.0.2.0 - Tvs now also reduce will, thank you Jellypowered!
 
 
