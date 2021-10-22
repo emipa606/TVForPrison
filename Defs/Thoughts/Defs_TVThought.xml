@@ -6,8 +6,8 @@
     <stackLimit>1</stackLimit>
     <stages>
       <li>
-        <label>Prison TV</label>
-        <description>Watching TV in prison</description>
+        <label>Prison entertainment</label>
+        <description>Enjoying entertainment in prison</description>
         <baseMoodEffect>3</baseMoodEffect>
       </li>
     </stages>

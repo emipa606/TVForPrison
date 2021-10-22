@@ -1,5 +1,8 @@
 # Changelog for TVForPrison
 
+1.0.4.0 - Added support for tv and radios in Vanilla Furniture Expanded, Vanilla Furniture Expanded - Spacer Module, WallStuff
+
+
 1.0.3.0 - Republish with debug off...
 
 

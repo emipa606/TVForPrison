@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="Radio_Industrial"]</xpath>
+    <success>Always</success>
+    <match Class="PatchOperationSequence">
+      <success>Always</success>
+      <operations>
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Radio_Industrial"]/tickerType</xpath>
+          <match Class="PatchOperationReplace">
+            <xpath>/Defs/ThingDef[defName="Radio_Industrial"]/tickerType</xpath>
+            <value>
+              <tickerType>Normal</tickerType>
+            </value>
+          </match>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Radio_Industrial"]</xpath>
+            <value>
+              <tickerType>Normal</tickerType>
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/ThingDef[defName="Radio_Spacer"]/tickerType</xpath>
+          <match Class="PatchOperationReplace">
+            <xpath>/Defs/ThingDef[defName="Radio_Spacer"]/tickerType</xpath>
+            <value>
+              <tickerType>Normal</tickerType>
+            </value>
+          </match>
+          <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Radio_Spacer"]</xpath>
+            <value>
+              <tickerType>Normal</tickerType>
+            </value>
+          </nomatch>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Radio_Industrial"]/comps</xpath>
+          <value>
+            <li Class="TVForPrison.CompProperties_TVForPrison">
+              <effectRadius>5</effectRadius>
+              <effectFactor>0.7</effectFactor>
+            </li>
+          </value>
+        </li>
+        <li Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="FlatscreenTelevision"]/comps</xpath>
+          <value>
+            <li Class="TVForPrison.CompProperties_TVForPrison">
+              <effectRadius>8</effectRadius>
+              <effectFactor>1</effectFactor>
+            </li>
+          </value>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+</Patch>
