@@ -46,7 +46,7 @@
           </value>
         </li>
         <li Class="PatchOperationAdd">
-          <xpath>/Defs/ThingDef[defName="FlatscreenTelevision"]/comps</xpath>
+          <xpath>/Defs/ThingDef[defName="Radio_Spacer"]/comps</xpath>
           <value>
             <li Class="TVForPrison.CompProperties_TVForPrison">
               <effectRadius>8</effectRadius>

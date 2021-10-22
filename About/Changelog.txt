@@ -1,5 +1,8 @@
 # Changelog for TVForPrison
 
+1.0.5.0 - Missing defname for the Radio_Spacer in one patch
+
+
 1.0.4.0 - Added support for tv and radios in Vanilla Furniture Expanded, Vanilla Furniture Expanded - Spacer Module, WallStuff
 
 
