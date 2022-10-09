@@ -5,6 +5,10 @@
 Update of peladors mod
 https://steamcommunity.com/sharedfiles/filedetails/?id=2002019195
 
+- Added support for radios in https://steamcommunity.com/sharedfiles/filedetails/?id=1718190143]Vanilla Furniture Expanded
+- Added support for tv in https://steamcommunity.com/sharedfiles/filedetails/?id=2028381079]Vanilla Furniture Expanded - Spacer Module
+- Added support for tvs and hifi in https://steamcommunity.com/sharedfiles/filedetails/?id=1994340640]WallStuff
+
 ![Image](https://i.imgur.com/pufA0kM.png)
 
 	
@@ -63,6 +67,7 @@ This mod accepts no responsibility for the loss of TVs due to prisoner actions.
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
+
 
 
 
