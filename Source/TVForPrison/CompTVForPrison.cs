@@ -206,7 +206,7 @@ public class CompTVForPrison : ThingComp
 
     public bool isFunctional(Building tv)
     {
-        return !tv.DestroyedOrNull() && tv is { Map: { }, Spawned: true } &&
+        return !tv.DestroyedOrNull() && tv is { Map: not null, Spawned: true } &&
                tv.TryGetComp<CompPowerTrader>().PowerOn && !tv.IsBrokenDown();
     }
 }
