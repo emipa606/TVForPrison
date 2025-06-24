@@ -7,15 +7,15 @@ namespace TVForPrison;
 
 public class CompTVForPrison : ThingComp
 {
-    public static readonly bool IdeoActive = ModLister.IdeologyInstalled;
-    public CompProperties_TVForPrison Props => (CompProperties_TVForPrison)props;
+    private static readonly bool ideoActive = ModLister.IdeologyInstalled;
+    private CompProperties_TVForPrison Props => (CompProperties_TVForPrison)props;
 
-    public Building TV => parent as Building;
+    private Building TV => parent as Building;
 
 
     public override void CompTick()
     {
-        var tickPeriod = 2500;
+        const int tickPeriod = 2500;
 #if DEBUG
             tickPeriod = 120;
 #endif
@@ -38,7 +38,7 @@ public class CompTVForPrison : ThingComp
 
         foreach (var cell in list)
         {
-            if (!IsValidCell(cell, TV))
+            if (!isValidCell(cell, TV))
             {
                 continue;
             }
@@ -56,7 +56,7 @@ public class CompTVForPrison : ThingComp
                     continue;
                 }
 
-                if (!IsValidPawn(pawn))
+                if (!isValidPawn(pawn))
                 {
                     continue;
                 }
@@ -107,8 +107,6 @@ public class CompTVForPrison : ThingComp
                         factor *= 0.8f;
                         break;
                     case TechLevel.Medieval:
-                        factor *= 0.9f;
-                        break;
                     case TechLevel.Spacer:
                         factor *= 0.9f;
                         break;
@@ -126,7 +124,7 @@ public class CompTVForPrison : ThingComp
                 }
 
                 var reduction = Math.Min(0.25f, guestResistance / 25f * factor);
-                var willreduction = Math.Min(0.25f, guestWill / 25f * factor);
+                var willReduction = Math.Min(0.25f, guestWill / 25f * factor);
 
                 if (guestResistance > lowestValue)
                 {
@@ -142,9 +140,9 @@ public class CompTVForPrison : ThingComp
                     }
                 }
 
-                if (IdeoActive && guestWill > lowestValue)
+                if (ideoActive && guestWill > lowestValue)
                 {
-                    if (guestWill - willreduction < 0f)
+                    if (guestWill - willReduction < 0f)
                     {
                         guestWill = 0f;
                         Messages.Message(
@@ -152,22 +150,22 @@ public class CompTVForPrison : ThingComp
                     }
                     else
                     {
-                        guestWill -= willreduction;
+                        guestWill -= willReduction;
                     }
                 }
 
                 pawn.guest.resistance = guestResistance;
-                if (IdeoActive)
+                if (ideoActive)
                 {
                     pawn.guest.will = guestWill;
                 }
 
-                GiveTVThought(pawn);
+                giveTVThought(pawn);
             }
         }
     }
 
-    public void GiveTVThought(Pawn pawn)
+    private static void giveTVThought(Pawn pawn)
     {
         bool hasNeed;
         if (pawn == null)
@@ -185,26 +183,26 @@ public class CompTVForPrison : ThingComp
             return;
         }
 
-        var tvdef = DefDatabase<ThoughtDef>.GetNamed("TVForPrison", false);
-        if (tvdef != null)
+        var tvDef = DefDatabase<ThoughtDef>.GetNamed("TVForPrison", false);
+        if (tvDef != null)
         {
-            pawn.needs.mood.thoughts.memories.TryGainMemory(tvdef);
+            pawn.needs.mood.thoughts.memories.TryGainMemory(tvDef);
         }
     }
 
-    public bool IsValidPawn(Pawn pawn)
+    private static bool isValidPawn(Pawn pawn)
     {
         return pawn.IsPrisonerInPrisonCell() && !pawn.RaceProps.IsMechanoid && pawn.Awake() && !pawn.Dead &&
                !pawn.IsBurning() && !pawn.InMentalState && !pawn.Downed;
     }
 
-    public bool IsValidCell(IntVec3 cell, Building tv)
+    private static bool isValidCell(IntVec3 cell, Building tv)
     {
         return cell.IsValid && cell.InBounds(tv.Map);
     }
 
 
-    public bool isFunctional(Building tv)
+    private static bool isFunctional(Building tv)
     {
         return !tv.DestroyedOrNull() && tv is { Map: not null, Spawned: true } &&
                tv.TryGetComp<CompPowerTrader>().PowerOn && !tv.IsBrokenDown();
