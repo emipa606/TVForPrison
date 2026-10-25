@@ -3,4 +3,22 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="TVForPrison/TVForPrison.csproj" />
+  <Folder Name="/.github/">
+    <File Path="../.github/copilot-instructions.md" />
+  </Folder>
+  <Folder Name="/XML/Patches/">
+    <File Path="../Patches/Patch_TV_Vanilla.xml" />
+    <File Path="../Patches/Patch_VFE.xml" />
+    <File Path="../Patches/Patch_VFESpacer.xml" />
+    <File Path="../Patches/Patch_WallStuff.xml" />
+  </Folder>
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/Defs/Thoughts/">
+    <File Path="../Defs/Thoughts/Defs_TVThought.xml" />
+  </Folder>
+  <Folder Name="/XML/Languages/English/Keyed/">
+    <File Path="../Languages/English/Keyed/TVLanguage.xml" />
+  </Folder>
 </Solution>

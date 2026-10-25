@@ -16,19 +16,12 @@ public class CompTVForPrison : ThingComp
     public override void CompTick()
     {
         const int tickPeriod = 2500;
-#if DEBUG
-            tickPeriod = 120;
-#endif
 
         base.CompTick();
         if (Find.TickManager.TicksGame % tickPeriod != 0 || !isFunctional(TV))
         {
             return;
         }
-
-#if DEBUG
-            Log.Message("TV OK: " + TV.def.label);
-#endif
 
         var list = GenRadial.RadialCellsAround(TV.Position, Math.Min(15, Props.effectRadius), true).ToList();
         if (list.Count <= 0)
@@ -60,9 +53,6 @@ public class CompTVForPrison : ThingComp
                 {
                     continue;
                 }
-#if DEBUG
-                    Log.Message("Pawn OK: " + pawn.Label);
-#endif
 
                 var guest = pawn.guest;
 
@@ -186,7 +176,7 @@ public class CompTVForPrison : ThingComp
         var tvDef = DefDatabase<ThoughtDef>.GetNamed("TVForPrison", false);
         if (tvDef != null)
         {
-            pawn.needs.mood.thoughts.memories.TryGainMemory(tvDef);
+            pawn?.needs.mood.thoughts.memories.TryGainMemory(tvDef);
         }
     }
 
